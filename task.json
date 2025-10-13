@@ -151,6 +151,22 @@
       }
     },
     {
+      "name": "search_payroll_entities",
+      "arguments": {
+        "entity_type": "payroll_records",
+        "filters": {
+          "employee_id": "3",
+          "status": "draft"
+        }
+      },
+      "output": {
+        "count": 0,
+        "entity_type": "payroll_records",
+        "results": [],
+        "success": true
+      }
+    },
+    {
       "name": "search_training_entities",
       "arguments": {
         "entity_type": "employee_training",
@@ -481,6 +497,22 @@
     },
     {
       "from": "search_user_employee_entities",
+      "to": "search_payroll_entities",
+      "connection": {
+        "output": "results[0].employee_id",
+        "input": "filters.employee_id"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "search_payroll_entities",
+      "connection": {
+        "output": "entity_type, status",
+        "input": "entity_type, filters.status"
+      }
+    },
+    {
+      "from": "search_user_employee_entities",
       "to": "search_training_entities",
       "connection": {
         "output": "results[0].employee_id",
@@ -531,7 +563,7 @@
       "from": "search_benefits_entities",
       "to": "handle_employee_benefits",
       "connection": {
-        "output": "results[0].enrollment_id, results[0].employee_id",
+        "output": "results[0,1].enrollment_id, results[0,1].employee_id",
         "input": "enrollment_id, benefits_data.employee_id"
       }
     },
@@ -541,14 +573,6 @@
       "connection": {
         "output": "action, status",
         "input": "action, benefits_data.status"
-      }
-    },
-    {
-      "from": "search_benefits_entities",
-      "to": "handle_employee_benefits",
-      "connection": {
-        "output": "results[1].enrollment_id, results[1].employee_id",
-        "input": "enrollment_id, benefits_data.employee_id"
       }
     },
     {
@@ -672,7 +696,7 @@
       }
     }
   ],
-  "num_edges": 29
+  "num_edges": 31
 
 }
 }
