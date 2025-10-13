@@ -1,0 +1,410 @@
+{
+  "env": "hr_experts",
+  "model_provider": "fireworks",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "num_trials": 3,
+  "temperature": 1,
+  "interface_num": 2,
+  "task": {
+    "user_id": "7",
+    "instruction": "You are Renee Mosley (email: reneemosley@company.com), an HR Manager. Employee Sarah Hill (sarahhill@protonmail.com) has requested to cancel her previously approved annual leave for February 19-02, 2024 (9 days) and submit a new leave request for February 19- March 04, 2024 (14 days total) - extending her leave by 6 additional days. Process this request by canceling the original leave and creating the new extended leave request.",
+    "actions": [
+      {
+  "actions": [
+    {
+      "name": "search_user_employee_entities",
+      "arguments": {
+        "entity_type": "users",
+        "filters": {
+          "email": "reneemosley@company.com"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "users",
+        "results": [
+          {
+            "created_at": "2024-01-05T11:36:06",
+            "email": "reneemosley@company.com",
+            "first_name": "Renee",
+            "last_name": "Mosley",
+            "mfa_enabled": false,
+            "phone_number": "+19386974032",
+            "role": "hr_manager",
+            "status": "active",
+            "updated_at": "2025-01-10T07:03:34",
+            "user_id": "7"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "search_user_employee_entities",
+      "arguments": {
+        "entity_type": "users",
+        "filters": {
+          "email": "sarahhill@protonmail.com"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "users",
+        "results": [
+          {
+            "created_at": "2022-02-23T21:12:39",
+            "email": "sarahhill@protonmail.com",
+            "first_name": "Sarah",
+            "last_name": "Hill",
+            "mfa_enabled": false,
+            "phone_number": "+12568749520",
+            "role": "employee",
+            "status": "active",
+            "updated_at": "2024-02-02T19:23:31",
+            "user_id": "90"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "search_user_employee_entities",
+      "arguments": {
+        "entity_type": "employees",
+        "filters": {
+          "user_id": "90"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "employees",
+        "results": [
+          {
+            "address": "2848 Amanda Forges Suite 492, North Ashley, ND 48749",
+            "created_at": "2024-02-24T20:26:33",
+            "date_of_birth": "1988-03-27",
+            "employee_id": "44",
+            "employment_status": "active",
+            "hire_date": "2024-02-17",
+            "hourly_rate": 34,
+            "manager_id": "28",
+            "position_id": "352",
+            "updated_at": "2024-12-05T08:27:42",
+            "user_id": "90"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "search_leave_entities",
+      "arguments": {
+        "entity_type": "leave_requests",
+        "filters": {
+          "employee_id": "44",
+          "status": "approved",
+          "start_date": "2025-02-19"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "leave_requests",
+        "results": [
+          {
+            "approval_date": "2025-02-17T20:55:35",
+            "approved_by": "7",
+            "created_at": "2025-02-17T15:15:27",
+            "days_requested": 9,
+            "employee_id": "44",
+            "end_date": "2025-02-28",
+            "leave_id": "197",
+            "leave_type": "sick",
+            "remaining_balance": 6.0,
+            "start_date": "2025-02-19",
+            "status": "approved",
+            "updated_at": "2025-02-25T01:03:14"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "handle_leave_requests",
+      "arguments": {
+        "approved_by": "7",
+        "leave_id": "197",
+        "operation": "update",
+        "status": "cancelled"
+      },
+      "output": {
+        "approval_date": "2025-10-01T12:00:00",
+        "approved_by": "7",
+        "created_at": "2025-02-17T15:15:27",
+        "days_requested": 9,
+        "employee_id": "44",
+        "end_date": "2025-02-28",
+        "leave_id": "197",
+        "leave_type": "sick",
+        "remaining_balance": 6.0,
+        "start_date": "2025-02-19",
+        "status": "cancelled",
+        "updated_at": "2025-10-01T12:00:00"
+      }
+    },
+    {
+      "name": "handle_audit_logs",
+      "arguments": {
+        "action": "update",
+        "field_name": "status",
+        "new_value": "cancelled",
+        "old_value": "approved",
+        "operation": "create",
+        "reference_id": "197",
+        "reference_type": "leave_requests",
+        "user_id": "7"
+      },
+      "output": {
+        "action": "update",
+        "field_name": "status",
+        "log_id": "2885",
+        "new_value": "cancelled",
+        "old_value": "approved",
+        "reference_id": "197",
+        "reference_type": "leave_requests",
+        "timestamp": "2025-10-01T12:00:00",
+        "user_id": "7"
+      }
+    },
+    {
+      "name": "handle_leave_requests",
+      "arguments": {
+        "days_requested": 14.0,
+        "employee_id": "44",
+        "end_date": "2025-03-04",
+        "leave_type": "annual",
+        "operation": "create",
+        "start_date": "2025-02-19"
+      },
+      "output": {
+        "approval_date": null,
+        "approved_by": null,
+        "created_at": "2025-10-01T12:00:00",
+        "days_requested": 14.0,
+        "employee_id": "44",
+        "end_date": "2025-03-04",
+        "leave_id": "449",
+        "leave_type": "annual",
+        "start_date": "2025-02-19",
+        "status": "pending",
+        "updated_at": "2025-10-01T12:00:00"
+      }
+    },
+    {
+      "name": "handle_audit_logs",
+      "arguments": {
+        "action": "create",
+        "operation": "create",
+        "reference_id": "449",
+        "reference_type": "leave_requests",
+        "user_id": "7"
+      },
+      "output": {
+        "action": "create",
+        "field_name": null,
+        "log_id": "2886",
+        "new_value": null,
+        "old_value": null,
+        "reference_id": "449",
+        "reference_type": "leave_requests",
+        "timestamp": "2025-10-01T12:00:00",
+        "user_id": "7"
+      }
+    },
+    {
+      "name": "handle_leave_requests",
+      "arguments": {
+        "approved_by": "7",
+        "leave_id": "449",
+        "operation": "update",
+        "status": "approved"
+      },
+      "output": {
+        "approval_date": "2025-10-01T12:00:00",
+        "approved_by": "7",
+        "created_at": "2025-10-01T12:00:00",
+        "days_requested": 14.0,
+        "employee_id": "44",
+        "end_date": "2025-03-04",
+        "leave_id": "449",
+        "leave_type": "annual",
+        "start_date": "2025-02-19",
+        "status": "approved",
+        "updated_at": "2025-10-01T12:00:00"
+      }
+    },
+    {
+      "name": "handle_audit_logs",
+      "arguments": {
+        "action": "update",
+        "field_name": "status",
+        "new_value": "approved",
+        "old_value": "pending",
+        "operation": "create",
+        "reference_id": "449",
+        "reference_type": "leave_requests",
+        "user_id": "7"
+      },
+      "output": {
+        "action": "update",
+        "field_name": "status",
+        "log_id": "2887",
+        "new_value": "approved",
+        "old_value": "pending",
+        "reference_id": "449",
+        "reference_type": "leave_requests",
+        "timestamp": "2025-10-01T12:00:00",
+        "user_id": "7"
+      }
+    }
+  ]
+}
+    ],
+    "outputs": [
+      {
+        
+      }
+    ],
+    
+  "edges": [
+    {
+      "from": "instruction",
+      "to": "search_user_employee_entities",
+      "connection": {
+        "output": "entity_type, email",
+        "input": "entity_type, filters.email"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "search_user_employee_entities",
+      "connection": {
+        "output": "entity_type, email",
+        "input": "entity_type, filters.email"
+      }
+    },
+    {
+      "from": "search_user_employee_entities",
+      "to": "search_user_employee_entities",
+      "connection": {
+        "output": "results[0].user_id",
+        "input": "filters.user_id"
+      }
+    },
+    {
+      "from": "search_user_employee_entities",
+      "to": "search_leave_entities",
+      "connection": {
+        "output": "results[0].employee_id",
+        "input": "filters.employee_id"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "search_leave_entities",
+      "connection": {
+        "output": "entity_type, status, start_date",
+        "input": "entity_type, filters.status, filters.start_date"
+      }
+    },
+    {
+      "from": "search_leave_entities",
+      "to": "handle_leave_requests",
+      "connection": {
+        "output": "results[0].leave_id",
+        "input": "leave_id"
+      }
+    },
+    {
+      "from": "search_user_employee_entities",
+      "to": "handle_leave_requests",
+      "connection": {
+        "output": "results[0].user_id",
+        "input": "approved_by"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "handle_leave_requests",
+      "connection": {
+        "output": "operation, status",
+        "input": "operation, status"
+      }
+    },
+    {
+      "from": "search_leave_entities",
+      "to": "handle_audit_logs",
+      "connection": {
+        "output": "results[0].leave_id",
+        "input": "reference_id"
+      }
+    },
+    {
+      "from": "search_user_employee_entities",
+      "to": "handle_audit_logs",
+      "connection": {
+        "output": "results[0].user_id",
+        "input": "user_id"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "handle_audit_logs",
+      "connection": {
+        "output": "action, field_name, new_value, old_value, operation, reference_type",
+        "input": "action, field_name, new_value, old_value, operation, reference_type"
+      }
+    },
+    {
+      "from": "search_user_employee_entities",
+      "to": "handle_leave_requests",
+      "connection": {
+        "output": "results[0].employee_id",
+        "input": "employee_id"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "handle_leave_requests",
+      "connection": {
+        "output": "operation, days_requested, end_date, leave_type, start_date",
+        "input": "operation, days_requested, end_date, leave_type, start_date"
+      }
+    },
+    {
+      "from": "handle_leave_requests",
+      "to": "handle_audit_logs",
+      "connection": {
+        "output": "leave_id",
+        "input": "reference_id"
+      }
+    },
+    {
+      "from": "handle_leave_requests",
+      "to": "handle_leave_requests",
+      "connection": {
+        "output": "leave_id",
+        "input": "leave_id"
+      }
+    },
+    {
+      "from": "handle_leave_requests",
+      "to": "handle_audit_logs",
+      "connection": {
+        "output": "leave_id",
+        "input": "reference_id"
+      }
+    }
+  ],
+  "num_edges": 16
+}
+}
