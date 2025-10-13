@@ -1,4 +1,12 @@
 {
+  "env": "hr_experts",
+  "model_provider": "fireworks",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "num_trials": 3,
+  "temperature": 1,
+  "interface_num": 2,
+  "task": {
+    "user_id": "3",
   "actions": [
     {
       "name": "search_user_employee_entities",
@@ -673,4 +681,5 @@
   ],
   "num_edges": 30
 
+}
 }
