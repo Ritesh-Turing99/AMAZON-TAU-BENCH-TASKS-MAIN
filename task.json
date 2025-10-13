@@ -419,7 +419,7 @@
         "operation": "create",
         "reference_id": "7",
         "reference_type": "employee_training",
-        "user_id": "48"
+        "user_id": "3"
       },
       "output": {
         "action": "update",
@@ -430,7 +430,7 @@
         "reference_id": "7",
         "reference_type": "employee_training",
         "timestamp": "2025-10-01T12:00:00",
-        "user_id": "48"
+        "user_id": "3"
       }
     }
 
@@ -453,14 +453,6 @@
       "connection": {
         "output": "action, email",
         "input": "action, requester_email"
-      }
-    },
-    {
-      "from": "instruction",
-      "to": "search_user_employee_entities",
-      "connection": {
-        "output": "entity_type, email",
-        "input": "entity_type, filters.email"
       }
     },
     {
@@ -680,7 +672,7 @@
       }
     }
   ],
-  "num_edges": 30
+  "num_edges": 29
 
 }
 }
