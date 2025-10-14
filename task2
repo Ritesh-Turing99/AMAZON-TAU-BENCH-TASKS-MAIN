@@ -192,7 +192,7 @@
         "days_requested": 14.0,
         "employee_id": "44",
         "end_date": "2025-03-04",
-        "leave_id": "449",
+        "leave_id": "448",
         "leave_type": "annual",
         "start_date": "2025-02-19",
         "status": "pending",
@@ -204,7 +204,7 @@
       "arguments": {
         "action": "create",
         "operation": "create",
-        "reference_id": "449",
+        "reference_id": "448",
         "reference_type": "leave_requests",
         "user_id": "7"
       },
@@ -214,7 +214,7 @@
         "log_id": "2886",
         "new_value": null,
         "old_value": null,
-        "reference_id": "449",
+        "reference_id": "448",
         "reference_type": "leave_requests",
         "timestamp": "2025-10-01T12:00:00",
         "user_id": "7"
@@ -224,7 +224,7 @@
       "name": "handle_leave_requests",
       "arguments": {
         "approved_by": "7",
-        "leave_id": "449",
+        "leave_id": "448",
         "operation": "update",
         "status": "approved"
       },
@@ -235,7 +235,7 @@
         "days_requested": 14.0,
         "employee_id": "44",
         "end_date": "2025-03-04",
-        "leave_id": "449",
+        "leave_id": "448",
         "leave_type": "annual",
         "start_date": "2025-02-19",
         "status": "approved",
@@ -250,7 +250,7 @@
         "new_value": "approved",
         "old_value": "pending",
         "operation": "create",
-        "reference_id": "449",
+        "reference_id": "448",
         "reference_type": "leave_requests",
         "user_id": "7"
       },
@@ -260,7 +260,7 @@
         "log_id": "2887",
         "new_value": "approved",
         "old_value": "pending",
-        "reference_id": "449",
+        "reference_id": "448",
         "reference_type": "leave_requests",
         "timestamp": "2025-10-01T12:00:00",
         "user_id": "7"
