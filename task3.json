@@ -1,0 +1,381 @@
+{
+  "env": "hr_experts",
+  "model_provider": "fireworks",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "num_trials": 3,
+  "temperature": 1,
+  "interface_num": 2,
+  "task": {
+    "user_id": "32",
+    "instruction": "You are Brian Williams (email: bwilliams@outlook.com), a Finance Officer. The company is discontinuing the 'Vision Care Plan' and needs to migrate all employees with employee-only coverage to the 'Davis Vision Plan'. Find all employees currently enrolled in the Vision Care Plan with employee-only coverage level, terminate their existing enrollments, and enroll them in the new Davis Vision Plan to ensure continuous vision coverage.",
+    "actions": [
+    {
+      "name": "search_user_employee_entities",
+      "arguments": {
+        "entity_type": "users",
+        "filters": {
+          "email": "bwilliams@outlook.com"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "users",
+        "results": [
+          {
+            "created_at": "2024-12-24T19:25:45",
+            "email": "bwilliams@outlook.com",
+            "first_name": "Brian",
+            "last_name": "Williams",
+            "mfa_enabled": true,
+            "phone_number": "+12513549316",
+            "role": "finance_officer",
+            "status": "suspended",
+            "updated_at": "2025-07-16T14:06:55",
+            "user_id": "32"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "validate_approval",
+      "arguments": {
+        "action": "update_benefits_plan",
+        "requester_email": "bwilliams@outlook.com"
+      },
+      "output": {
+        "approval_valid": true,
+        "approved_by": "finance_officer",
+        "message": "Approved by authorized role: finance_officer"
+      }
+    },
+    {
+      "name": "search_benefits_entities",
+      "arguments": {
+        "entity_type": "benefits_plans",
+        "filters": {
+          "plan_name": "Vision Care Plan"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "benefits_plans",
+        "results": [
+          {
+            "created_at": "2023-10-29T16:20:39",
+            "effective_date": "2023-11-01",
+            "employee_cost": 15.0,
+            "employer_cost": 35.0,
+            "expiration_date": "2027-06-04",
+            "plan_id": "16",
+            "plan_name": "Vision Care Plan",
+            "plan_type": "vision",
+            "provider": "VSP",
+            "status": "active",
+            "updated_at": "2025-07-19T01:33:29"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "search_benefits_entities",
+      "arguments": {
+        "entity_type": "employee_benefits",
+        "filters": {
+          "plan_id": "16",
+          "coverage_level": "employee_only"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "employee_benefits",
+        "results": [
+          {
+            "beneficiary_name": "Pamela Alvarez",
+            "beneficiary_relationship": "self",
+            "coverage_level": "employee_only",
+            "created_at": "2025-03-10T08:00:06",
+            "employee_id": "79",
+            "enrollment_date": "2024-11-25",
+            "enrollment_id": "214",
+            "plan_id": "16",
+            "status": "active",
+            "updated_at": "2025-05-01T15:56:50"
+          }
+        ],
+        "success": true
+      }
+    },
+
+  {
+      "name": "search_benefits_entities",
+      "arguments": {
+        "entity_type": "benefits_plans",
+        "filters": {
+          "plan_name": "Davis Vision Plan"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "benefits_plans",
+        "results": [
+          {
+            "created_at": "2024-07-30T21:22:41",
+            "effective_date": "2024-08-22",
+            "employee_cost": 14.0,
+            "employer_cost": 40.0,
+            "expiration_date": null,
+            "plan_id": "18",
+            "plan_name": "Davis Vision Plan",
+            "plan_type": "vision",
+            "provider": "Davis Vision",
+            "status": "active",
+            "updated_at": "2025-06-12T01:01:48"
+          }
+        ],
+        "success": true
+      }
+    },
+
+    {
+      "name": "handle_employee_benefits",
+      "arguments": {
+        "action": "update",
+        "benefits_data": {
+          "status": "terminated"
+        },
+        "enrollment_id": "214"
+      },
+      "output": {
+        "action": "update",
+        "benefits_data": {
+          "beneficiary_name": "Pamela Alvarez",
+          "beneficiary_relationship": "self",
+          "coverage_level": "employee_only",
+          "created_at": "2025-03-10T08:00:06",
+          "employee_id": "79",
+          "enrollment_date": "2024-11-25",
+          "enrollment_id": "214",
+          "plan_id": "16",
+          "status": "terminated",
+          "updated_at": "2025-10-01T12:00:00"
+        },
+        "enrollment_id": "214",
+        "message": "Employee benefits enrollment 214 updated successfully",
+        "success": true
+      }
+    },
+    {
+      "name": "handle_audit_logs",
+      "arguments": {
+        "action": "update",
+        "field_name": "status",
+        "new_value": "terminated",
+        "old_value": "active",
+        "operation": "create",
+        "reference_id": "214",
+        "reference_type": "benefits_plan",
+        "user_id": "32"
+      },
+      "output": {
+        "action": "update",
+        "field_name": "status",
+        "log_id": "2885",
+        "new_value": "terminated",
+        "old_value": "active",
+        "reference_id": "214",
+        "reference_type": "benefits_plan",
+        "timestamp": "2025-10-01T12:00:00",
+        "user_id": "32"
+      }
+    },
+    
+    {
+      "name": "handle_employee_benefits",
+      "arguments": {
+        "action": "create",
+        "benefits_data": {
+          "employee_id": "79",
+          "plan_id": "18",
+          "enrollment_date": "2025-02-15",
+          "coverage_level": "employee_only"
+        }
+      },
+      "output": {
+        "action": "create",
+        "benefits_data": {
+          "beneficiary_name": null,
+          "beneficiary_relationship": null,
+          "coverage_level": "employee_only",
+          "created_at": "2025-10-01T12:00:00",
+          "employee_id": "79",
+          "enrollment_date": "2025-02-15",
+          "enrollment_id": "271",
+          "plan_id": "18",
+          "status": "active",
+          "updated_at": "2025-10-01T12:00:00"
+        },
+        "enrollment_id": "271",
+        "message": "Employee benefits enrollment 271 created successfully",
+        "success": true
+      }
+    },
+    {
+      "name": "handle_audit_logs",
+      "arguments": {
+        "action": "create",
+        "operation": "create",
+        "reference_id": "271",
+        "reference_type": "benefits_plans",
+        "user_id": "32"
+      },
+      "output": {
+        "action": "create",
+        "field_name": null,
+        "log_id": "2886",
+        "new_value": null,
+        "old_value": null,
+        "reference_id": "271",
+        "reference_type": "benefits_plans",
+        "timestamp": "2025-10-01T12:00:00",
+        "user_id": "32"
+      }
+    }
+    ],
+    "outputs": [
+    ],
+  
+  "edges": [
+    {
+        "from": "instruction",
+        "to": "search_user_employee_entities",
+        "connection": {
+          "output": "entity_type, email",
+          "input": "entity_type, filters.email"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "validate_approval",
+        "connection": {
+          "output": "action, requester_email",
+          "input": "action, requester_email"
+        }
+      },
+    {
+      "from": "instruction",
+      "to": "search_benefits_entities",
+      "connection": {
+        "output": "entity_type, plan_name, coverage_level",
+        "input": "entity_type, filters.plan_name, filters.coverage_level"
+      }
+    },
+    {
+      "from": "search_benefits_entities",
+      "to": "search_benefits_entities",
+      "connection": {
+        "output": "results[0].plan_id",
+        "input": "filters.plan_id"
+      }
+    },
+    {
+      "from": "search_benefits_entities",
+      "to": "handle_employee_benefits",
+      "connection": {
+        "output": "results[0].enrollment_id",
+        "input": "enrollment_id"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "handle_employee_benefits",
+      "connection": {
+        "output": "action, benefits_data.status",
+        "input": "action, benefits_data.status"
+      }
+    },
+    {
+      "from": "handle_employee_benefits",
+      "to": "handle_audit_logs",
+      "connection": {
+        "output": "enrollment_id, benefits_data.status",
+        "input": "reference_id, new_value"
+      }
+    },
+    {
+      "from": "search_benefits_entities",
+      "to": "handle_audit_logs",
+      "connection": {
+        "output": "results[0].status",
+        "input": "old_value"
+      }
+    },
+    {
+      "from": "search_user_employee_entities",
+      "to": "handle_audit_logs",
+      "connection": {
+        "output": "results[0].user_id",
+        "input": "user_id"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "handle_audit_logs",
+      "connection": {
+        "output": "action, field_name, operation, reference_type",
+        "input": "action, field_name, operation, reference_type"
+      }
+    },
+    {
+      "from": "search_benefits_entities",
+      "to": "handle_employee_benefits",
+      "connection": {
+        "output": "results[0].employee_id",
+        "input": "benefits_data.employee_id"
+      }
+    },
+    {
+      "from": "search_benefits_entities",
+      "to": "handle_employee_benefits",
+      "connection": {
+        "output": "results[0].plan_id",
+        "input": "benefits_data.plan_id"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "handle_employee_benefits",
+      "connection": {
+        "output": "action, benefits_data.enrollment_date, benefits_data.coverage_level",
+        "input": "action, benefits_data.enrollment_date, benefits_data.coverage_level"
+      }
+    },
+    {
+      "from": "handle_employee_benefits",
+      "to": "handle_audit_logs",
+      "connection": {
+        "output": "enrollment_id",
+        "input": "reference_id"
+      }
+    },
+    {
+      "from": "search_user_employee_entities",
+      "to": "handle_audit_logs",
+      "connection": {
+        "output": "results[0].user_id",
+        "input": "user_id"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "handle_audit_logs",
+      "connection": {
+        "output": "action, operation, reference_type",
+        "input": "action, operation, reference_type"
+      }
+    }
+  ],
+  "num_edges": 16
+}
+}
