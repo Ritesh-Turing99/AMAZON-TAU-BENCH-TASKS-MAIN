@@ -7,7 +7,7 @@
   "interface_num": 2,
   "task": {
     "user_id": "7",
-    "instruction": "You are Renee Mosley (email: reneemosley@company.com), an HR Manager. Employee Sarah Hill (sarahhill@protonmail.com) has requested to cancel her previously approved annual leave for February 19-28, 2024 (9 days) and submit a new leave request for February 19- March 04, 2024 (14 days total) - extending her leave by 6 additional days. You need to process this request by reflecting the same in the system",
+    "instruction": "You are Renee Mosley (email: reneemosley@company.com), an HR Manager. Employee Sarah Hill (sarahhill@protonmail.com) has requested to cancel her previously approved annual leave for February 19-28, 2024 (9 days) and submit a new leave request for February 19- March 04, 2024 (14 days total) - extending her leave by 6 additional days. Process this request by canceling the original leave and approving the new extended leave request.",
     "actions": [
       {
   "actions": [
