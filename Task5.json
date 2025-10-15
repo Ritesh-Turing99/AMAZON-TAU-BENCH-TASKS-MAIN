@@ -60,8 +60,7 @@
             "employee_cost": 0,
             "employer_cost": 240,
             "status": "active",
-            "effective_date": "2025-01-01",
-            "expiration_date": null
+            "effective_date": "2025-01-01"
           }
         },
         "output": {
