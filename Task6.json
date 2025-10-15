@@ -1,0 +1,280 @@
+{
+  "env": "hr_experts",
+  "model_provider": "fireworks",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "num_trials": 3,
+  "temperature": 1,
+  "interface_num": 2,
+  "task": {
+    "user_id": "34",
+    "instruction": "You are Zachary Bradshaw (email: zacharybradshaw@yahoo.com), a Finance Officer. You need to process an equipment purchase deduction for employee Christopher Smith (email: csmith@protonmail.com) who bought company equipment worth $1,500. Apply this equipment-type deduction to his January 2025 payroll record (pay period: 2025-01-01 to 2025-01-31). Locate the employee's payroll record, create the equipment deduction, and maintain proper audit trails for compliance.",
+    "actions": [
+    {
+      "name": "search_user_employee_entities",
+      "arguments": {
+        "entity_type": "users",
+        "filters": {
+          "email": "zacharybradshaw@yahoo.com"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "users",
+        "results": [
+          {
+            "created_at": "2024-10-01T22:08:51",
+            "email": "zacharybradshaw@yahoo.com",
+            "first_name": "Zachary",
+            "last_name": "Bradshaw",
+            "mfa_enabled": true,
+            "phone_number": "+14707318274",
+            "role": "finance_officer",
+            "status": "active",
+            "updated_at": "2025-01-28T22:59:57",
+            "user_id": "34"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "validate_approval",
+      "arguments": {
+        "action": "payroll_correction",
+        "requester_email": "zacharybradshaw@yahoo.com"
+      },
+      "output": {
+        "approval_valid": true,
+        "message": "Role 'finance_officer' is directly authorized for action 'payroll_correction'"
+      }
+    },
+    {
+      "name": "search_user_employee_entities",
+      "arguments": {
+        "entity_type": "users",
+        "filters": {
+          "email": "csmith@protonmail.com"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "users",
+        "results": [
+          {
+            "created_at": "2021-04-19T02:46:24",
+            "email": "csmith@protonmail.com",
+            "first_name": "Christopher",
+            "last_name": "Smith",
+            "mfa_enabled": false,
+            "phone_number": "+14702543965",
+            "role": "employee",
+            "status": "active",
+            "updated_at": "2025-07-15T00:32:48",
+            "user_id": "88"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "search_user_employee_entities",
+      "arguments": {
+        "entity_type": "employees",
+        "filters": {
+          "user_id": "88"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "employees",
+        "results": [
+          {
+            "address": "PSC 2801, Box 3128, APO AA 33429",
+            "created_at": "2023-01-22T21:37:13",
+            "date_of_birth": "1996-01-13",
+            "employee_id": "42",
+            "employment_status": "active",
+            "hire_date": "2022-02-12",
+            "hourly_rate": 139,
+            "manager_id": null,
+            "position_id": "375",
+            "updated_at": "2023-10-22T22:00:55",
+            "user_id": "88"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "search_payroll_entities",
+      "arguments": {
+        "entity_type": "payroll_records",
+        "filters": {
+          "employee_id": "42",
+          "pay_period_start": "2025-01-01"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "payroll_records",
+        "results": [
+          {
+            "approved_by": "36",
+            "created_at": "2025-02-03T21:46:21",
+            "employee_id": "42",
+            "hourly_rate": 139.0,
+            "hours_worked": 9.95,
+            "pay_period_end": "2025-01-31",
+            "pay_period_start": "2025-01-01",
+            "payment_date": null,
+            "payroll_id": "250",
+            "status": "draft",
+            "updated_at": "2025-02-14T22:39:00"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "handle_payroll_deduction",
+      "arguments": {
+        "action": "create",
+        "deduction_data": {
+          "payroll_id": "250",
+          "created_by": "34",
+          "deduction_type": "equipment",
+          "amount": 1500
+        }
+      },
+      "output": {
+        "action": "create",
+        "deduction_data": {
+          "amount": 1500,
+          "created_at": "2025-10-01T12:00:00",
+          "created_by": "34",
+          "deduction_id": "1371",
+          "deduction_type": "equipment",
+          "payroll_id": "250"
+        },
+        "deduction_id": "1371",
+        "message": "Payroll deduction 1371 created successfully",
+        "success": true
+      }
+    },
+    {
+      "name": "handle_audit_logs",
+      "arguments": {
+        "action": "create",
+        "operation": "create",
+        "reference_id": "1371",
+        "reference_type": "payroll_deductions",
+        "user_id": "34"
+      },
+      "output": {
+        "action": "create",
+        "field_name": null,
+        "log_id": "2885",
+        "new_value": null,
+        "old_value": null,
+        "reference_id": "1371",
+        "reference_type": "payroll_deductions",
+        "timestamp": "2025-10-01T12:00:00",
+        "user_id": "34"
+      }
+    }
+  ],
+    "outputs": [
+    ],
+      "edges": [
+    {
+        "from": "instruction",
+        "to": "search_user_employee_entities",
+        "connection": {
+          "output": "entity_type, email",
+          "input": "entity_type, filters.email"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "validate_approval",
+        "connection": {
+          "output": "action, requester_email",
+          "input": "action, requester_email"
+        }
+      },
+    {
+      "from": "search_user_employee_entities",
+      "to": "search_user_employee_entities",
+      "connection": {
+        "output": "results[0].user_id",
+        "input": "filters.user_id"
+      }
+    },
+    {
+      "from": "search_user_employee_entities",
+      "to": "search_payroll_entities", 
+      "connection": {
+        "output": "results[0].employee_id",
+        "input": "filters.employee_id"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "search_payroll_entities",
+      "connection": {
+        "output": "entity_type, pay_period_start",
+        "input": "entity_type, filters.pay_period_start"
+      }
+    },
+    {
+      "from": "search_payroll_entities",
+      "to": "handle_payroll_deduction",
+      "connection": {
+        "output": "results[0].payroll_id", 
+        "input": "deduction_data.payroll_id"
+      }
+    },
+    {
+      "from": "search_user_employee_entities",
+      "to": "handle_payroll_deduction",
+      "connection": {
+        "output": "results[0].user_id",
+        "input": "deduction_data.created_by"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "handle_payroll_deduction",
+      "connection": {
+        "output": "action, deduction_type, amount",
+        "input": "action, deduction_data.deduction_type, deduction_data.amount"
+      }
+    },
+    {
+      "from": "handle_payroll_deduction",
+      "to": "handle_audit_logs",
+      "connection": {
+        "output": "deduction_id",
+        "input": "reference_id"
+      }
+    },
+    {
+      "from": "search_user_employee_entities",
+      "to": "handle_audit_logs",
+      "connection": {
+        "output": "results[0].user_id",
+        "input": "user_id"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "handle_audit_logs",
+      "connection": {
+        "output": "action, operation, reference_type",
+        "input": "action, operation, reference_type"
+      }
+    }
+  ],
+  "num_edges": 11
+}
+}
