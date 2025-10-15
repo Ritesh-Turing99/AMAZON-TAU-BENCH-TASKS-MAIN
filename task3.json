@@ -7,7 +7,7 @@
   "interface_num": 2,
   "task": {
     "user_id": "32",
-    "instruction": "You are Brian Williams (email: bwilliams@outlook.com), a Finance Officer. The company is discontinuing the 'Vision Care Plan' and needs to migrate all employees with employee-only coverage to the 'Davis Vision Plan'. Find all employees currently enrolled in the Vision Care Plan with employee-only coverage level, terminate their existing enrollments, and enroll them in the new Davis Vision Plan to ensure continuous vision coverage.",
+    "instruction": "You are Brian Williams (email: bwilliams@outlook.com), a Finance Officer. The company is discontinuing the 'Vision Care Plan' and will migrate all employees with employee-only coverage to the 'Davis Vision Plan', effective February 15, 2025. You need to find all affected employees, terminate their current enrollments in the vision care plan, and enroll them in the new Davis Vision Plan to ensure their vision coverage continues without interruption.",
     "actions": [
     {
       "name": "search_user_employee_entities",
