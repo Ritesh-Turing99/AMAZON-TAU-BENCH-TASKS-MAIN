@@ -7,7 +7,7 @@
   "interface_num": 2,
   "task": {
     "user_id": "33",
-    "instruction": "You are John Freeman (email: johnfreeman@outlook.com), a Finance Officer. You want to create a new ChatGPT Plus Membership benefits plan as a flexible spending benefit provided by OpenAI, with no cost to employees ($0) and an annual employer contribution of $240, effective from January 1, 2025. This new plan will be given to employees who exceed expectations in their project-based performance reviews. Process the complete workflow including benefits plan creation, employee enrollment, and audit logging.",
+    "instruction": "You are John Freeman (email: johnfreeman@outlook.com), a Finance Officer. You want to create a new ChatGPT Plus Membership benefits plan as a flexible spending benefit provided by OpenAI, with no cost to employees ($0) and an annual employer contribution of $240, effective from January 1, 2025. This new plan will be given to employees who have submitted project-based performance reviews that exceed expectations. Process the complete workflow including benefits plan creation, employee enrollment, and audit logging.",
     "actions": [
       {
         "name": "search_user_employee_entities",
@@ -193,7 +193,6 @@
       }
     ],
     "outputs": [
-      {}
     ],
      "edges": [
     {
@@ -241,7 +240,7 @@
       "to": "handle_employee_benefits",
       "connection": {
         "output": "plan_id",
-        "input": "benefits_data.employee_id"
+        "input": "benefits_data.plan_id"
       }
     },
   {
