@@ -7,7 +7,7 @@
   "interface_num": 2,
   "task": {
     "user_id": "7",
-    "instruction": "You are Renee Mosley (email: reneemosley@company.com), an HR Manager. You need to review and approve leave requests for employee Christopher Simpson (email: christopher30@outlook.com) as he doesn't have system access currently and is unable to manage his requests. You need to search for his pending bereavement leave requests with start date June 1, 2025, and verify if the remaining balance are less than the applied days. If remaining balance < applied days, then cancel the original request and follow the split procedure: first, create a bereavement leave for the remaining balance days (from original start date), and second, create an annual leave for the difference (remaining days). Calculate the start date of the annual leave as the day after the bereavement leave ends, and ensure the end date covers the original requested period. Both new requests should be approved immediately and all changes should be properly audited.",
+    "instruction": "You are Renee Mosley (reneemosley@company.com), an HR Manager. You've received a pending bereavement leave request from Christopher Simpson (christopher30@outlook.com) starting June 1, 2025. He submitted this request after his grandmother passed away, needing time for funeral arrangements and family matters. Please review and process his bereavement leave request according to company policy and his available leave entitlements. If needed, annual leave can be used to supplement bereavement leave to ensure employees receive adequate time off during family emergencies.",
     "actions": [
     {
       "name": "search_user_employee_entities",
